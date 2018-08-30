@@ -1,22 +1,109 @@
 <!DOCTYPE html>
+
+
 <html>
 <head>
+
     <title>The AJAXson 5</title>
     <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+  
+    <style>
+
+        body {
+            background-color: rgb(188, 235, 247);
+            display: block;
+            margin: 350px;
+            font-family: "Courier New", monospace;
+            text-align: center;
+            border-color: black;
+            border: 2px solid rgb(25, 25, 65);
+            
+        }
+
+        form {
+            background-color:lightcyan;
+            padding: 5px;
+        }
+
+        b {
+            font-size: 15px;
+        }
+
+        .flex-container-title {
+            background-color: rgba(164, 212, 245, 0.788);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+      
+        }
+
+        #flex-container-block {
+            background-color: rgba(164, 212, 245, 0.788);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 10px; 
+            
+        }
+
+        #flex-container-riddle {
+            background-color: rgba(164, 212, 245, 0.788);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 10px;
+        }
+
+        #btn-submit {
+            background-color:royalblue;
+            height: 30px;
+            color: white;
+            border-radius: 8px;
+        }
+        #feedback {
+            color: red;
+            font-weight: bolder;
+        }
+
+    </style>
 </head>
+
 <body>
     <div id="mount-point">
-        <h1>The AJAXson 5</h1>
+        <div class="flex-container-title">
+            <h1>The AJAXson 5</h1>
+        </div>    
 
         <form>
-            <label>What kind of Jackson 5 related gif do you want?</label>
-            <input name="tag" type="text"/>
+            <br>
+            <div id="flex-container-block">
+                <div><label>What kind of Jackson 5 related gif do you want?</label></div>
+                <br>
+                <div><input v-model="tagValue" id="query-box" name="tag" type="text" placeholder="e.g. 'dance'" /></div>
             <!--
                 TODO
                 Use some Vue.js magic to keep the input above in sync
                 with tagValue over in request-gif.js
             -->
-            <input
+                <br>
+            </div>
+
+            <br>
+            <div id="flex-container-riddle">
+                <div><label>Prove you are not a robot by answering this riddle:</label></div>
+                <br>
+                <div>
+                    <input id="riddle-id" name="riddle" type="text"/>
+                    <b id="riddle-label">Jacksons are better than 1.</b>
+                </div>
+                <br>
+            </div>
+            
+            <br>
+
+            <input id="btn-submit"
                 type="submit"
                 value="Get my Gif!"
                 @click.prevent="fetchGif"
@@ -27,9 +114,12 @@
                 It's a Vue.js thing, not something built into JS or HTML
             -->
         </form>
-
+        <br>
         <img id="gif" v-bind:src="imgSrc" v-if="imgSrc"/>
         <!-- TODO show the user a "Loading..." message if we're currently loading -->
+        <h3 v-if="loading">Loading ...</h3>
+        <h3 v-else></h3>
+
         <p id="feedback" v-if="errorMessage">
             {{ errorMessage }}
         </p>
